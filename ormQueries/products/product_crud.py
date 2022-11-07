@@ -49,10 +49,7 @@ class ProductCrud:
 
     @classmethod 
     def manufacturer_names_for_query(cls, string):
-        man_list = []
-        for item in Product.objects.filter(manufacturer__icontains=string).values('manufacturer'):
-            man_list.append(item['manufacturer'])
-        return man_list
+        return Product.objects.filter(manufacturer__icontains=string).values_list('manufacturer', flat=True)
 
     @classmethod 
     def not_in_a_category(cls, string):
@@ -64,10 +61,7 @@ class ProductCrud:
 
     @classmethod
     def category_manufacturers(cls, category):
-        man_list = []
-        for item in Product.objects.filter(category__icontains=category).values('manufacturer'):
-            man_list.append(item['manufacturer'])
-        return man_list
+        return Product.objects.filter(category__icontains=category).values_list('manufacturer', flat=True)
 
     @classmethod 
     def average_category_rating(cls, category):
