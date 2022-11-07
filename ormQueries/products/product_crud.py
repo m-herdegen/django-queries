@@ -79,13 +79,8 @@ class ProductCrud:
 
     @classmethod 
     def longest_model_name(cls):
-        long_model_name = ''
-        max_id = -1
-        for item in Product.objects.all():
-            if len(item.model) > len(long_model_name):
-                long_model_name = item.model 
-                max_id = item.id
-        return max_id
+        return Product.objects.all().annotate(field_len=Length('model')).order_by('-field_len')[0].id
+
 
     @classmethod 
     def ordered_by_model_length(cls):
